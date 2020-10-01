@@ -31,6 +31,7 @@
     </div>
 </template>
 
+
 <script>
   export default {
     name: "Login",
@@ -55,16 +56,44 @@
     },
     methods: {
       onSubmit(formName) {
-        console.log('submit!');
+        console.log('submit!')
+         let _this = this
          this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$message({
-                message: '登陆成功',
-                type: 'success'
-            });
+            _this.loading = !_this.loading  
+            const params = {
+                "userName": _this.form.username,
+                "password": _this.form.password
+            }
+
+            this.axios({
+                method: 'post',
+                url: 'http://192.168.1.121:8081/user-login/login',
+                data: params
+            }).then(res => {
+                _this.loading = false
+                const data = res.data
+                if(data.code == 200){
+                    this.$message({
+                        message: '登陆成功！！！',
+                        type: 'success'
+                    })
+                    // home 页面 携带用户数据
+                    const userInfo = data.data
+                    this.$router.push({name: "home",params: userInfo})
+                }else{
+                    let msg = data.msg
+                    this.$message.error(msg)
+                }
+            }).catch(err => {
+                _this.loading = false
+                console.log("error",err )
+                this.$message.error('登陆失败！')
+            })
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            this.$message.error('登陆失败！！！')
+            return false
           }
         });
       }

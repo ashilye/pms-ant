@@ -10,12 +10,16 @@ import router from './router'
 //导入ElementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+//导入axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 //使用路由
 Vue.use(VueRouter)
 //使用ElementUI
 Vue.use(ElementUI)
+//使用axios
+Vue.use(VueAxios,axios)
 
 
 

@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-    <el-form ref="form" :model="form" class="login-form">
+    <el-form ref="form" :model="form" :rules="rules" class="login-form">
          <h3 class="title">管理系统</h3>
         
         <el-form-item prop="username">
@@ -12,8 +12,7 @@
           v-model="form.password"
           type="password"
           auto-complete="off"
-          placeholder="密码"
-          @keyup.enter.native="handleLogin">
+          placeholder="密码">
         </el-input>
       </el-form-item>
 
@@ -23,8 +22,7 @@
           size="medium"
           type="primary"
           style="width:100%;"
-          @click.native.prevent="handleLogin"
-        >
+          @click="onSubmit('form')">
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
@@ -39,15 +37,36 @@
     data() {
       return {
         form: {
-          name: '',
+          username: '',
           password: ''
+        },
+        rules: {
+            username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 4, max: 18, message: '长度在 4 到 18个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 4, max: 18, message: '长度在 4 到 18个字符', trigger: 'blur' }
+          ],
         },
         loading: false
       }
     },
     methods: {
-      onSubmit() {
+      onSubmit(formName) {
         console.log('submit!');
+         this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$message({
+                message: '登陆成功',
+                type: 'success'
+            });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     }
   }

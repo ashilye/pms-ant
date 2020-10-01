@@ -19,6 +19,15 @@ export default new Router({
             //跳转到组件
             component: login
 
+        },
+        {
+            //路由路径
+            path: '/home',
+            //路由名称
+            name: 'home',
+            //跳转到组件
+            component: home
+
         }
     ]
 });

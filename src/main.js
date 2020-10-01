@@ -4,15 +4,20 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 
+
 //导入路由配置表
 import router from './router'
 //导入ElementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+
 //使用路由
 Vue.use(VueRouter)
 //使用ElementUI
+Vue.use(ElementUI)
+
+
 
 
 
